@@ -3,7 +3,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   DATABASE_USER: postgres
-  DATABASE_PASSWORD: password
+  DATABASE_PASSWORD: postgres
 
 name: Rails tests
 on: [push, pull_request]

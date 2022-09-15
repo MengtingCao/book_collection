@@ -19,14 +19,38 @@ RSpec.describe 'Creating a book', type: :feature do
     expect(Book.count).to eq(1)
   end
 
-  scenario 'invalid input' do
+  scenario 'invalid title input' do
     visit new_book_path
+    fill_in 'Author', with: 'j.k. rowling'
+    fill_in 'Price', with: '13.49'
     select '1997', from: 'book[published_date(1i)]'
     select 'June', from: 'book[published_date(2i)]'
     select '26', from: 'book[published_date(3i)]'
     click_on 'Create Book'
     expect(page).to have_content('Title can\'t be blank')
+    expect(Book.count).to eq(0)
+  end
+
+  scenario 'invalid author input' do
+    visit new_book_path
+    fill_in 'Title', with: 'harry potter'
+    fill_in 'Price', with: '13.49'
+    select '1997', from: 'book[published_date(1i)]'
+    select 'June', from: 'book[published_date(2i)]'
+    select '26', from: 'book[published_date(3i)]'
+    click_on 'Create Book'
     expect(page).to have_content('Author can\'t be blank')
+    expect(Book.count).to eq(0)
+  end
+
+  scenario 'invalid price input' do
+    visit new_book_path
+    fill_in 'Title', with: 'harry potter'
+    fill_in 'Author', with: 'j.k. rowling'
+    select '1997', from: 'book[published_date(1i)]'
+    select 'June', from: 'book[published_date(2i)]'
+    select '26', from: 'book[published_date(3i)]'
+    click_on 'Create Book'
     expect(page).to have_content('Price can\'t be blank')
     expect(Book.count).to eq(0)
   end
@@ -53,18 +77,29 @@ RSpec.describe 'Editing a book', type: :feature do
     expect(Book.count).to eq(1)
   end
 
-  scenario 'invalid updates' do
+  scenario 'invalid title updates' do
     visit books_path
     click_on 'Edit'
     fill_in 'Title', with: ''
-    fill_in 'Author', with: ''
-    fill_in 'Price', with: ''
-    select '1818', from: 'book[published_date(1i)]'
-    select 'January', from: 'book[published_date(2i)]'
-    select '1', from: 'book[published_date(3i)]'
     click_on 'Update Book'
     expect(page).to have_content('Title can\'t be blank')
+    expect(Book.count).to eq(1)
+  end
+
+  scenario 'invalid author updates' do
+    visit books_path
+    click_on 'Edit'
+    fill_in 'Author', with: ''
+    click_on 'Update Book'
     expect(page).to have_content('Author can\'t be blank')
+    expect(Book.count).to eq(1)
+  end
+
+  scenario 'invalid price updates' do
+    visit books_path
+    click_on 'Edit'
+    fill_in 'Price', with: ''
+    click_on 'Update Book'
     expect(page).to have_content('Price can\'t be blank')
     expect(Book.count).to eq(1)
   end

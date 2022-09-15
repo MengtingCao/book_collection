@@ -1,0 +1,29 @@
+<div class="subjects delete">
+    <h1>Delete Book</h1>
+
+    <%= form_for(@book, method: 'delete') do |form| %>
+        <p>Are you sure you want to permanently delete this book?</p>
+        <p>
+        <strong>Title:</strong>
+        <%= @book.title %>
+        </p>
+        <p>
+        <strong>Author:</strong>
+        <%= @book.author %>
+        </p>
+        <p>
+        <strong>Price:</strong>
+        <%= @book.price %>
+        </p>
+        <p>
+        <strong>Published Date:</strong>
+        <%= @book.published_date %>
+        </p>
+
+        <div class="form-buttons">
+            <%= form.submit("Delete Book") %>
+        </div>
+    <% end %>
+</div>
+
+<%= link_to 'Back', books_path %>
